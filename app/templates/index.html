@@ -1,61 +1,86 @@
 {% load timedelta_filter %} 
 
-<style>
-    table, th, td {
-        border: 1px solid black;
-      }
-</style>
-<h1>{{time.username}}</h1>
-<table>
-    <tr>
-        <th>Date</th>
-        <th>Time In</th>
-        <th>Time Out</th>
-        <th>Hours</th>
-        <th>Accomplishments</th>
-        <th>Action</th>
-    </tr>
-    {%for shit in time.dtr.all|dictsort:'date'%}
-    <tr>
-        <td>{{shit.date}}</td>
-        <td>{{shit.time_in|time:'h:i A'}}</td>
-        <td>{{shit.time_out|time:'h:i A'}}</td>
-        <td>{{shit.diff}}</td>
-        <td>{{shit.desc}}</td>
-        <td>
-            <button onclick="location.href='/edit/{{shit.id}}'">Edit</button>
-            <button onclick="location.href='/deleteproc/{{shit.id}}'">Delete</button>
-        </td>
-    </tr>
-    {%endfor%}
-    <tr>
-        <td colspan="3">TOTAL</td>
-        <td>
-            {% if time.dtr.all|length > 0 %}
-            {%for key, val in total.items%}
-            {{ val|timedelta:"{hours_total}:{minutes2}" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Document</title>
+    <style>
+        .box-login{
+            box-shadow: 0px 16px 50px rgba(0,0,0,0.1);
+            padding: 50px 75px;
+            border-radius: 15px;
+            background: rgb(255,255,255);
+            width: 500px
+        }
+        body{
+            background: #f0f0f0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .form-control{
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid rgb(200, 200, 200);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1>{{time.username}}</h1>
+    
+        <table class="table table-light">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Time In</th>
+                    <th>Time Out</th>
+                    <th>Hours</th>
+                    <th>Accomplishments</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            {%for shit in time.dtr.all|dictsort:'date'%}
+            <tr>
+                <td>{{shit.date}}</td>
+                <td>{{shit.time_in|time:'h:i A'}}</td>
+                <td>{{shit.time_out|time:'h:i A'}}</td>
+                <td>{{shit.diff}}</td>
+                <td>{{shit.desc}}</td>
+                <td>
+                    <button class="btn" onclick="location.href='/edit/{{shit.id}}'">Edit</button>
+                    <button class="btn btn-danger" onclick="location.href='/deleteproc/{{shit.id}}'">Delete</button>
+                </td>
+            </tr>
             {%endfor%}
-            {%endif%}
-        </td>
-    </tr>
-</table>
+            <tr class="table-active">
+                <td colspan="3">TOTAL</td>
+                <td >
+                    {% if time.dtr.all|length > 0 %}
+                    {%for key, val in total.items%}
+                    {{ val|timedelta:"{hours_total}:{minutes2}" }}
+                    {%endfor%}
+                    {%endif%}
+                </td>
+            </tr>
+            <form action="addtime/" method="post">{%csrf_token%}
+                <tr>
+                    <td><input type="date" name="date" class="form-control"></td>
+                    <td><input type="time" name="time-in" class="form-control"> </td>
+                    <td> <input type="time" name="time-out" class="form-control"> </td>
+                    <td></td>
+                    <td><input type="text" name="desc" class="form-control"></td>
+                    <td><button type="submit" class="btn btn-primary">add</button></td>
+                </tr>
+            </form>
+        </table>
+        <button class="btn btn-warning" onclick="location.href='/logout/'">Logout</button>
+    </div>
+    
 
-<br>
-
-<form action="addtime/" method="post">{%csrf_token%}
-    <label for="date">Date</label>
-    <input type="date" name="date">
-
-    <label for="time-in">Time-in</label>
-    <input type="time" name="time-in">
-
-    <label for="time-out">Time-out</label>
-    <input type="time" name="time-out">
-
-    <label for="desc">Accomplishments</label>
-    <input type="text" name="desc">
-
-    <button type="submit">add</button>
-</form>
-
-<button onclick="location.href='/logout/'">Logout</button>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</html>

@@ -55,6 +55,12 @@ def registerproc(request):
     if request.method == "POST":
         username = request.POST['username']
 
+        if username == "":
+            return redirect('/register/')
+
+        if username in list(Account.objects.values_list('username', flat=True)):
+            return redirect('/register/')
+
         account = Account()
 
         account.username = username
@@ -65,6 +71,11 @@ def registerproc(request):
 def loginproc(request):
     if request.method == "POST":
         username = request.POST['username']
+        try:
+            account = Account.objects.get(username=username)
+
+        except:
+            return redirect('/login/')
 
         request.session['username'] = username
         request.session.save()
