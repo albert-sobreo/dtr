@@ -23,9 +23,10 @@ def addTime(request):
         dtr.date = datetime.strptime(request.POST['date'], '%Y-%m-%d')
 
         dtr.time_in = datetime.strptime(request.POST['time-in'], '%H:%M')
-        dtr.time_out = datetime.strptime(request.POST['time-out'], '%H:%M')
+        if request.POST['time-out'] != "":
+            dtr.time_out = datetime.strptime(request.POST['time-out'], '%H:%M')
 
-        dtr.diff = dtr.time_out - dtr.time_in
+            dtr.diff = dtr.time_out - dtr.time_in
 
         dtr.desc = request.POST['desc']
 
