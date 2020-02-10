@@ -38,10 +38,16 @@ def addTime(request):
         return HttpResponse('invalid')
 
 def loginpage(request):
-    return render(request, "login.html", )
+    if not request.session.is_empty():
+        return redirect('/')
+    else:
+        return render(request, "login.html", )
 
 def registerpage(request):
-    return render(request, "register.html", )
+    if not request.session.is_empty():
+        return redirect('/')
+    else:
+        return render(request, "register.html", )
 
 def registerproc(request):
     if request.method == "POST":
