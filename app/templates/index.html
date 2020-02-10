@@ -24,11 +24,7 @@
     <tr>
         <td colspan="3">TOTAL</td>
         <td>
-            {%if total.items|length > 0%}
-            {%for key, val in total.items%}
-            {{ val|timedelta:"{hours_total}:{minutes2}" }}
-            {%endfor%}
-            {%endif%}
+            
         </td>
     </tr>
 </table>
