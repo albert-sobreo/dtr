@@ -7,6 +7,18 @@ class DTR(models.Model):
     time_out = models.TimeField(null=True)
     diff = models.DurationField(null=True)
 
+    class Meta:
+        db_table = 'dtr'
+
+    def __str__(self):
+        return str(self.date)
+
 class Account(models.Model):
     username = models.CharField(max_length=255, null=True, blank=True)
     dtr = models.ManyToManyField(DTR, blank=True)
+
+    class Meta:
+        db_table = 'account'
+
+    def __str__(self):
+        return self.username
