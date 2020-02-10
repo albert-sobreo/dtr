@@ -11,7 +11,7 @@ class DTR(models.Model):
         db_table = 'dtr'
 
     def __str__(self):
-        return str(self.date) + " " str(self.time_in) + " " + str(self.time_out)
+        return str(self.date) + " " + str(self.time_in) + " " + str(self.time_out)
 
 class Account(models.Model):
     username = models.CharField(max_length=255, null=True, blank=True)
