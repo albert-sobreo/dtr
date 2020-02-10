@@ -5,7 +5,7 @@
         border: 1px solid black;
       }
 </style>
-
+<h1>{{time.username}}</h1>
 <table>
     <tr>
         <th>Date</th>
@@ -13,18 +13,18 @@
         <th>Time Out</th>
         <th>Hours</th>
     </tr>
-    {%for data in time%}
+    {%for shit in time.dtr.all%}
     <tr>
-        <td>{{data.date}}</td>
-        <td>{{data.time_in}}</td>
-        <td>{{data.time_out}}</td>
-        <td>{{data.diff}}</td>
+        <td>{{shit.date}}</td>
+        <td>{{shit.time_in}}</td>
+        <td>{{shit.time_out}}</td>
+        <td>{{shit.diff}}</td>
     </tr>
     {%endfor%}
     <tr>
         <td colspan="3">TOTAL</td>
         <td>
-            {% if time|length > 0 %}
+            {% if time.dtr.all|length > 0 %}
             {%for key, val in total.items%}
             {{ val|timedelta:"{hours_total}:{minutes2}" }}
             {%endfor%}
@@ -50,3 +50,5 @@
 
     <button type="submit">add</button>
 </form>
+
+<button onclick="location.href='/logout/'">Logout</button>

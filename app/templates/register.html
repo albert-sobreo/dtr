@@ -1,0 +1,7 @@
+<h1>Register</h1>
+
+<form action="/registerproc/" method="POST">{%csrf_token%}
+    <label for="username">Username</label>
+    <input type="text" name="username">
+    <button type="submit">Register</button>
+</form>

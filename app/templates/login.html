@@ -1,0 +1,8 @@
+<h1>DTR</h1>
+
+<form action="/loginproc/" method="POST">{%csrf_token%}
+    <label for="username">Username</label>
+    <input type="text" name="username">
+    <button type="submit">Login</button>
+</form>
+<button onclick="location.href='/register/'">Register</button>
