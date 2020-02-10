@@ -5,6 +5,7 @@ class DTR(models.Model):
     date = models.DateField(null=True)
     time_in = models.TimeField(null=True)
     time_out = models.TimeField(null=True)
+    desc = models.CharField(max_length=512, null=True)
     diff = models.DurationField(null=True)
 
     class Meta:

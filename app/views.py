@@ -19,13 +19,15 @@ def addTime(request):
     account = Account.objects.get(username=username)
     if request.method == "POST":
         dtr = DTR()
-
+        
         dtr.date = datetime.strptime(request.POST['date'], '%Y-%m-%d')
 
         dtr.time_in = datetime.strptime(request.POST['time-in'], '%H:%M')
         dtr.time_out = datetime.strptime(request.POST['time-out'], '%H:%M')
 
         dtr.diff = dtr.time_out - dtr.time_in
+
+        dtr.desc = request.POST['desc']
 
         dtr.save()
 
@@ -72,3 +74,36 @@ def loginproc(request):
 def logoutview(request):
     logout(request)
     return HttpResponseRedirect('/login/')
+
+def edit(request, dtr_id):
+    dtr = DTR.objects.get(id=dtr_id)
+    myshit = {
+        "id": dtr.id,
+        "date": dtr.date,
+        "time_in": dtr.time_in,
+        "time_out": dtr.time_out,
+        "desc": dtr.desc,
+    }
+    return render(request, "edit.html", myshit)
+
+def editproc(request, dtr_id):
+    dtr = DTR.objects.get(id=dtr_id)
+    if request.method == "POST":
+        date = request.POST['date']
+        time_in = request.POST['time_in']
+        time_out = request.POST['time_out']
+        desc = request.POST['desc']
+
+        dtr.date = datetime.strptime(date, '%Y-%m-%d')
+        dtr.time_in = datetime.strptime(time_in, '%H:%M')
+        dtr.time_out = datetime.strptime(time_out, '%H:%M')
+        dtr.desc = desc
+        dtr.diff = dtr.time_out - dtr.time_in
+
+        dtr.save()
+
+    return redirect('/')
+
+def deleteproc(request, dtr_id):
+    dtr = DTR.objects.get(id=dtr_id).delete()
+    return redirect('/')

@@ -1,0 +1,25 @@
+<h1>Edit</h1>
+
+<form action="/editproc/{{id}}" method="POST">{%csrf_token%}
+    <label for="date">Date</label>
+    <input type="date" name="date" value="{{date|date:'Y-m-d'}}">
+    
+    <br>
+    
+    <label for="time_in">Time in:</label>
+    <input type="time" name="time_in" value="{{time_in|time:'H:i'}}">
+    
+    <br>
+    
+    <label for="time_out">Time out:</label>
+    <input type="time" name="time_out" value="{{time_out|time:'H:i'}}">
+    
+    <br>
+    
+    <label for="desc">Accomplishments</label>
+    <input type="text" name="desc" value="{{desc}}">
+    
+    <br>
+    
+    <button type="submit">Save</button>
+</form>

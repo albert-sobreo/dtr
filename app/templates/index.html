@@ -12,13 +12,20 @@
         <th>Time In</th>
         <th>Time Out</th>
         <th>Hours</th>
+        <th>Accomplishments</th>
+        <th>Action</th>
     </tr>
-    {%for shit in time.dtr.all%}
+    {%for shit in time.dtr.all|dictsort:'date'%}
     <tr>
         <td>{{shit.date}}</td>
-        <td>{{shit.time_in}}</td>
-        <td>{{shit.time_out}}</td>
+        <td>{{shit.time_in|time:'h:i A'}}</td>
+        <td>{{shit.time_out|time:'h:i A'}}</td>
         <td>{{shit.diff}}</td>
+        <td>{{shit.desc}}</td>
+        <td>
+            <button onclick="location.href='/edit/{{shit.id}}'">Edit</button>
+            <button onclick="location.href='/deleteproc/{{shit.id}}'">Delete</button>
+        </td>
     </tr>
     {%endfor%}
     <tr>
@@ -45,8 +52,8 @@
     <label for="time-out">Time-out</label>
     <input type="time" name="time-out">
 
-    <!-- <label for="hours">Hours</label>
-    <input type="text" name="hours" disabled> -->
+    <label for="desc">Accomplishments</label>
+    <input type="text" name="desc">
 
     <button type="submit">add</button>
 </form>
