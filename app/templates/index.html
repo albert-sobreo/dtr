@@ -1,0 +1,46 @@
+{% load timedelta_filter %} 
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+      }
+</style>
+
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Time In</th>
+        <th>Time Out</th>
+        <th>Hours</th>
+    </tr>
+    {%for data in time%}
+    <tr>
+        <td>{{data.date}}</td>
+        <td>{{data.time_in}}</td>
+        <td>{{data.time_out}}</td>
+        <td>{{data.diff}}</td>
+    </tr>
+    {%endfor%}
+    <tr>
+        <td colspan="3">TOTAL</td>
+        <td>{%for key, val in total.items%}{{ val|timedelta:"{hours_total}:{minutes2}" }}{%endfor%}</td>
+    </tr>
+</table>
+
+<br>
+
+<form action="addtime/" method="post">{%csrf_token%}
+    <label for="date">Date</label>
+    <input type="date" name="date">
+
+    <label for="time-in">Time-in</label>
+    <input type="time" name="time-in">
+
+    <label for="time-out">Time-out</label>
+    <input type="time" name="time-out">
+
+    <!-- <label for="hours">Hours</label>
+    <input type="text" name="hours" disabled> -->
+
+    <button type="submit">add</button>
+</form>
