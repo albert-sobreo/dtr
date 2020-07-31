@@ -16,7 +16,8 @@ class DTR(models.Model):
 
 class Account(models.Model):
     username = models.CharField(max_length=255, null=True, blank=True)
-    dtr = models.ManyToManyField(DTR, blank=True)
+    dtr = models.ManyToManyField(DTR, blank=True, related_name="dtr")
+    fuck=models.ManyToManyField(DTR, blank=True, related_name="fuck")
 
     class Meta:
         db_table = 'account'
